@@ -23,7 +23,7 @@ export interface SignUpRequest {
   email: string,
   username: string,
   password: string,
-  name: string,
-  surname: string,
-  role: string
+  first_name: string,
+  last_name: string,
+  roles: string[]
 }
