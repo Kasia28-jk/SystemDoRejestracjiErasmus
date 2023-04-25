@@ -64,8 +64,9 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/test/admin/*").hasRole("ADMIN")
-                .antMatchers("/api/test/user/*").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/v1/**").permitAll()
+//                .antMatchers("/api/test/admin/*").hasRole("ADMIN")
+//                .antMatchers("/api/test/user/*").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
