@@ -1,0 +1,15 @@
+:host {
+  margin-top: 1rem;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 1rem;
+  display: block;
+  padding: 1rem;
+}
+
+.universities-list {
+  &__header {
+   font-size: 1.5rem;
+   grid-row: 1;
+   grid-column: 1 / span 4;
+  }
+}
