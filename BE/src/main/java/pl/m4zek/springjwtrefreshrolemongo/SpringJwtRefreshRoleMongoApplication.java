@@ -1,5 +1,7 @@
 package pl.m4zek.springjwtrefreshrolemongo;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import pl.m4zek.springjwtrefreshrolemongo.model.Role;
 import pl.m4zek.springjwtrefreshrolemongo.payload.request.SignupRequest;
 import pl.m4zek.springjwtrefreshrolemongo.service.RoleService;
@@ -11,7 +13,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @SpringBootApplication
 public class SpringJwtRefreshRoleMongoApplication {
@@ -35,8 +44,8 @@ public class SpringJwtRefreshRoleMongoApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void initDb(){
-
         logger.info("Initialize data in database");
+
         Role adminRole = roleService.save(new Role("ADMIN",
                 "An Administrator provides office support to either an individual or " +
                         "team and is vital for the smooth-running of a business"));
@@ -45,12 +54,23 @@ public class SpringJwtRefreshRoleMongoApplication {
                 "A user role is a predefined category that can be assigned to " +
                         "users on the basis of their job title or some other criteria"));
 
+
         try {
-            userService.save(new SignupRequest("Bruce", "Wayne","user@gmai.com","user","password", Collections.singletonList("USER")));
-            userService.save(new SignupRequest("Steven", "Johns","admin@gmai.com","admin","password", Collections.singletonList("ADMIN")));
-        } catch (Exception e){
-            logger.info("Initialize database: {}", e.getMessage());
+            URL res = getClass().getClassLoader().getResource("employee.csv");
+            String path = Paths.get(res.toURI()).toFile().getAbsolutePath();
+            CSVReader reader = new CSVReader(new FileReader(path));
+
+            String[] user;
+            while ((user = reader.readNext()) != null) {
+                try {
+                    List<String> roles = Arrays.asList(user[5].split("/"));
+                    userService.save(new SignupRequest(user[0], user[1],user[2],user[3],user[4], roles));
+                } catch (Exception e){
+                    logger.info("Initialize database: {}", e.getMessage());
+                }
+            }
+        } catch (IOException | CsvException | URISyntaxException e) {
+            logger.error("CSV read error: {}", e.getMessage());
         }
     }
-
 }
