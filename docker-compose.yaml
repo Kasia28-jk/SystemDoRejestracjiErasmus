@@ -27,6 +27,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
+    volumes:
+      - "./FE/nginx.conf:/etc/nginx/nginx.conf"
 
 volumes:
   mongo-db:
