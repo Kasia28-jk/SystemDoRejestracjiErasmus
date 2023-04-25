@@ -1,27 +1,21 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-
-
-export interface Registration {
-  email: string,
-  username: string,
-  password: string,
-  name: string,
-  surname: string,
-  role: string
-}
-
-// pozniej opcjonalne uzupelnienie dodatkowych danych
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {SignUpRequest} from "../model/auth.model";
+import {catchError, map, Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
-  register(userData: Registration) //: Observable<boolean>
-  {
-    //return this.http.post<>("", rejestracja);
+  signUp(userData: SignUpRequest): Observable<boolean> {
+    return this.httpClient.post<void>("/api/auth/register", userData)
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
+      )
   }
 }

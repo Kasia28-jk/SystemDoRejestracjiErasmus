@@ -25,3 +25,7 @@ label {
 .btn-primary {
   margin: 25px 0;
 }
+
+.error-message {
+  color: red;
+}

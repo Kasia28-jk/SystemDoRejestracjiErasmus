@@ -1,18 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {LoginComponent} from "./pages/login/login.component";
-import {RegistrationComponent} from "./pages/registration/registration.component";
+import {LoginComponent} from "./pages/auth-wrapper/page-components/login/login.component";
+import {RegistrationComponent} from "./pages/auth-wrapper/page-components/registration/registration.component";
 import {PagenotfoundComponent} from "./pages/pagenotfound/pagenotfound.component";
-import {HomepageComponent} from "./pages/homepage/homepage.component";
+import {AuthWrapperComponent} from "./pages/auth-wrapper/auth-wrapper.component";
 import {NavigationComponent} from "./components/navigation/navigation.component";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonModule} from "@angular/material/button";
-import { RouterModule } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { SignMeUpComponent } from './pages/dashboard/sign-me-up/sign-me-up.component';
-import { AboutMeComponent } from './pages/dashboard/about-me/about-me.component';
+import {RouterModule} from '@angular/router';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
+import {SignMeUpComponent} from './pages/dashboard/sign-me-up/sign-me-up.component';
+import {AboutMeComponent} from './pages/dashboard/about-me/about-me.component';
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { AboutMeComponent } from './pages/dashboard/about-me/about-me.component'
     LoginComponent,
     RegistrationComponent,
     PagenotfoundComponent,
-    HomepageComponent,
+    AuthWrapperComponent,
     NavigationComponent,
     DashboardComponent,
     SignMeUpComponent,
@@ -33,7 +34,8 @@ import { AboutMeComponent } from './pages/dashboard/about-me/about-me.component'
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatIconModule
   ],
   exports: [
     NavigationComponent,

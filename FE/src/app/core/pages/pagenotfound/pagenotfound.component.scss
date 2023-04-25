@@ -1,0 +1,20 @@
+.not-found-page {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  &__title {
+    font-size: 2rem;
+  }
+
+  &__go-back {
+    color: white;
+    cursor: pointer;
+  }
+}

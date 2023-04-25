@@ -27,21 +27,13 @@ export class NavigationComponent {
       name: "Moje dane",
       path: "/dashboard/about-me"
     },
-    // func3: {
-    //   name: "Funkcjonalność 3",
-    //   path: "/dashboard/sign-me-up"
-    // },
-    // func4: {
-    //   name: "Funckjonalność 4",
-    //   path: "/dashboard/about-me"
-    // },
     login: {
       name: "logowanie (podgląd)",
-      path: "/homepage/login"
+      path: "/auth/login"
     },
     dashboard: {
       name: "rejestracja (podgląd)",
-      path: "/homepage/registration"
+      path: "/auth/registration"
     },
   }
   public navigation = Object.keys(this.NAVIGATION);

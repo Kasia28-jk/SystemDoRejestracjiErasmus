@@ -78,8 +78,7 @@
 
     <button type="submit" class="btn btn-primary">Zarejestruj</button>
   </form>
-  <a class="text-option" (click)="goToLoginPage()"> Masz już konto? Zaloguj się!</a>
+  <a class="text-option"
+     routerLink="/auth/login"
+  > Masz już konto? Zaloguj się!</a>
 </div>
-
-
-<!-- do ogarniecia, ez [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) <input _ngcontent-opc-c13 id=​"password" type=​"password" formcontrolname=​"password" class=​"form-control ng-touched ng-dirty ng-valid" ng-reflect-name=​"password">​ -->

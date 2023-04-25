@@ -4,10 +4,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CoreModule} from "./core/core.module";
 import {ErasmusApplicationModule} from "./modules/erasmus-application/erasmus-application.module";
+import { StudentMainPageComponent } from './modules/pages/student-main-page/student-main-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StudentMainPageComponent
   ],
   imports: [
     BrowserModule,
