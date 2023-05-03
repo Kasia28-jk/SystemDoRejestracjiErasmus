@@ -15,6 +15,7 @@ import org.springframework.context.event.EventListener;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -56,10 +57,8 @@ public class SpringJwtRefreshRoleMongoApplication {
 
 
         try {
-            URL res = getClass().getClassLoader().getResource("employee.csv");
-            String path = Paths.get(res.toURI()).toFile().getAbsolutePath();
-            CSVReader reader = new CSVReader(new FileReader(path));
-
+            InputStreamReader inputStreamReader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("employee.csv"));
+            CSVReader reader = new CSVReader(inputStreamReader);
             String[] user;
             while ((user = reader.readNext()) != null) {
                 try {
@@ -69,7 +68,7 @@ public class SpringJwtRefreshRoleMongoApplication {
                     logger.info("Initialize database: {}", e.getMessage());
                 }
             }
-        } catch (IOException | CsvException | URISyntaxException e) {
+        } catch (IOException | CsvException e) {
             logger.error("CSV read error: {}", e.getMessage());
         }
     }
