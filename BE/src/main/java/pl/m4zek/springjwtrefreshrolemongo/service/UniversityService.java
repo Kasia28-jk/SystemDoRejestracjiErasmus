@@ -26,4 +26,9 @@ public class UniversityService {
         return universityRepository.findAll();
     }
 
+
+    public University findById(String id){
+        return universityRepository.findById(id).orElse(null);
+    }
+
 }

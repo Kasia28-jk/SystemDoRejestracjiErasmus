@@ -7,11 +7,16 @@ spring:
       port: 27018
       host: localhost
       database: test
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 20MB
+      max-file-size: 2MB
 
 jwt:
   token:
     secretKey: someSecretKey
-    expirationSec: 300            # 5 min
+    expirationSec: 900            # 5 min
     refreshExpirationSec: 900     # 15min
     header: Authorization
     prefix: Bearer
