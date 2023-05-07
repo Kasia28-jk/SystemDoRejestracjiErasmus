@@ -1,11 +1,13 @@
+import {Role} from "../../modules/erasmus-application/model/roles.enum";
+
 export interface LoggedUserResponse {
   token: string
   refreshToken: string
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
   email: string
   username: string
-  roles: string[]
+  roles: Role[]
 }
 
 export interface LoggingWrapper {

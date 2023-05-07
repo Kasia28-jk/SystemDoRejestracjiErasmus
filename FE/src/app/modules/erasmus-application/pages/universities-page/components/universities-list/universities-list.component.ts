@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { UniversityModel } from "../../../../model/university.model";
-import { HttpClient } from '@angular/common/http';
-import { UserContextService } from "../../../../../../core/services/user-context.service";
+import {Component} from '@angular/core';
+import {UniversityModel} from "../../../../model/university.model";
 
 @Component({
   selector: 'app-universities-list',
@@ -9,8 +7,6 @@ import { UserContextService } from "../../../../../../core/services/user-context
   styleUrls: ['./universities-list.component.scss']
 })
 export class UniversitiesListComponent {
-
-  token$: any;
 
   universities: UniversityModel[] = [
     {
@@ -46,23 +42,4 @@ export class UniversitiesListComponent {
   ];
 
   displayedColumns: string[] = ['name', 'description', 'address', 'city', 'country', 'email', 'phoneNumber', 'availableLanguages'];
-
-  constructor(private httpClient: HttpClient, private userContextService: UserContextService) {
-  }
-
-
-  temp() {
-    let accessToken
-
-    this.userContextService.getUserToken().subscribe((data) => accessToken = data);
-
-    console.log(accessToken);
-    const httpHeaders: any = new Headers({
-      'Accept': 'text/html',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`
-    })
-    this.httpClient.get<any>("http://localhost:8080/api/v1/universities/all", { headers: httpHeaders })
-  }
-
 }
