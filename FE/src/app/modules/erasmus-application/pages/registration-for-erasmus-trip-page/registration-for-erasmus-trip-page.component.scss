@@ -1,0 +1,35 @@
+:host {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 1rem;
+    display: block;
+    padding: 1rem;
+  }
+  
+  .add-university {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 1rem;
+  
+    &__header {
+      font-size: 1.5rem;
+      grid-row: 1;
+      grid-column: 1 / span 4;
+  
+    }
+  
+    &__description {
+      grid-row: 3;
+      grid-column: 1 / span 4;
+    }
+  
+    &__button {
+      grid-column: 1 / span 4;
+      justify-self: end;
+  
+      background-color: #131472;
+      color: white !important;
+      font-weight: 500;
+      width: 9rem;
+    }
+  }
+  

@@ -12,14 +12,15 @@ import {MatButtonModule} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BrowserModule} from "@angular/platform-browser";
 import {MatTableModule} from "@angular/material/table";
-
+import { RegistrationForErasmusTripPageComponent } from './pages/registration-for-erasmus-trip-page/registration-for-erasmus-trip-page.component';
 
 @NgModule({
   declarations: [
     StudentMainPageComponent,
     UniversitiesPageComponent,
     AddUniversityComponent,
-    UniversitiesListComponent
+    UniversitiesListComponent,
+    RegistrationForErasmusTripPageComponent
   ],
   imports: [
     CommonModule,
