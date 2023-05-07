@@ -28,9 +28,9 @@ export class RegistrationComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
-      surname: new FormControl('', Validators.required),
-      role: new FormControl('', Validators.required)
+      first_name: new FormControl('', Validators.required),
+      last_name: new FormControl('', Validators.required),
+      roles: new FormControl([], Validators.required)
     }, {updateOn: 'blur'});
   }
 
