@@ -1,5 +1,5 @@
 <div class="universities">
-  <app-add-university>
+  <app-add-university *appRoleChecker="allRoles.ROLE_USER">
   </app-add-university>
 
   <app-universities-list>

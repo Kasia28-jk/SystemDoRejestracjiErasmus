@@ -36,8 +36,8 @@ export class UserContextService {
     this.currentUser$.next({
       loggedIn: true,
       userContext: {
-        name: userLogged.first_name,
-        surname: userLogged.last_name,
+        name: userLogged.firstName,
+        surname: userLogged.lastName,
         roles: userLogged.roles,
         token: userLogged.token
       }

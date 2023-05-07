@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Role} from "../../model/roles.enum";
 
 @Component({
   selector: 'app-universities-page',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class UniversitiesPageComponent {
 
+  public allRoles = Role;
 }
