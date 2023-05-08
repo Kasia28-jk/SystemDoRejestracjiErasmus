@@ -15,7 +15,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BrowserModule} from "@angular/platform-browser";
 import {MatTableModule} from "@angular/material/table";
 import {RoleCheckerDirective} from "./directive/role-checker.directive";
-
+import { RegistrationForErasmusTripPageComponent } from './pages/registration-for-erasmus-trip-page/registration-for-erasmus-trip-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +23,7 @@ import {RoleCheckerDirective} from "./directive/role-checker.directive";
     UniversitiesPageComponent,
     AddUniversityComponent,
     UniversitiesListComponent,
+    RegistrationForErasmusTripPageComponent,
     RoleCheckerDirective
   ],
   imports: [
