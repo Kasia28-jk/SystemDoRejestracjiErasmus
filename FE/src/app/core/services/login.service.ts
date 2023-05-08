@@ -14,19 +14,7 @@ export class LoginService {
   }
 
   login(loginRequestModel: LoginRequestModel): Observable<LoggingWrapper> {
-
-    return of(JSON.parse("{\n" +
-      "  \"token\": \"string\",\n" +
-      "  \"refreshToken\": \"string\",\n" +
-      "  \"first_name\": \"string\",\n" +
-      "  \"last_name\": \"string\",\n" +
-      "  \"email\": \"string\",\n" +
-      "  \"username\": \"string\",\n" +
-      "  \"roles\": [\n" +
-      "    \"string\"\n" +
-      "  ]\n" +
-      "}")) // TODO - change when signup backend will be fixed.
-    // return this.httpClient.post<LoggedUserResponse>("/api/auth/authenticate", loginRequestModel)
+    return this.httpClient.post<LoggedUserResponse>("/api/auth/authenticate", loginRequestModel)
       .pipe(
         map(response => {
           return {success: true, loggedUser: response}

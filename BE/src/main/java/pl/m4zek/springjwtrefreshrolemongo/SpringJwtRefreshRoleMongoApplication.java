@@ -52,6 +52,7 @@ public class SpringJwtRefreshRoleMongoApplication {
 
 
         try {
+
             FileReader fr = new FileReader("src/main/resources/employee.csv");
             BufferedReader br = new BufferedReader(fr);
             Stream<String> lines = br.lines();
@@ -59,6 +60,7 @@ public class SpringJwtRefreshRoleMongoApplication {
             lines.forEach(item -> {
                 String[] user = item.split(",");
                 List<String> roles = Arrays.asList(user[5].split("/"));
+
                 try {
                     userService.save(new SignupRequest(user[0], user[1],user[2],user[3],user[4], roles));
                     logger.info("Employee add to database from file: " + user[0] + " " + user[1]);

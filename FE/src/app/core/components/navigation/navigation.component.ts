@@ -21,20 +21,13 @@ export class NavigationComponent {
   NAVIGATION: Navigation = {
     registration: {
       name: "Rejestracja na wyjazd",
-      path: "/dashboard/sign-me-up"
+      path: "/erasmus/apply"
     },
-    aboutMe: {
-      name: "Moje dane",
-      path: "/dashboard/about-me"
+    universities: {
+      name: "Lista uczelni",
+      path: "/erasmus/universities"
     },
-    login: {
-      name: "logowanie (podgląd)",
-      path: "/auth/login"
-    },
-    dashboard: {
-      name: "rejestracja (podgląd)",
-      path: "/auth/registration"
-    },
+
   }
   public navigation = Object.keys(this.NAVIGATION);
 

@@ -1,0 +1,59 @@
+<form class="add-university"
+      [formGroup]="universityForm"
+>
+
+  <h4 class="add-university__header">
+    Dodaj nową uczelnie
+  </h4>
+
+  <mat-form-field appearance="outline" class="add-university__input">
+    <mat-label>Nazwa uniwersytetu</mat-label>
+    <input matInput formControlName="name" placeholder="Wpisz nazwę uniwersytetu">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="add-university__input add-university__description">
+    <mat-label>Opis uniwersytetu</mat-label>
+    <textarea matInput formControlName="description" placeholder="Wpisz opis uniwersytetu"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="add-university__input">
+    <mat-label>Adres uniwersytetu</mat-label>
+    <input matInput formControlName="address" placeholder="Wpisz adres uniwersytetu">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="add-university__input">
+    <mat-label>Miasto</mat-label>
+    <input matInput formControlName="city" placeholder="Wpisz miasto">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="add-university__input">
+    <mat-label>Kraj</mat-label>
+    <input matInput formControlName="country" placeholder="Wpisz kraj">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="add-university__input">
+    <mat-label>Adres e-mail</mat-label>
+    <input matInput formControlName="email" placeholder="Wpisz adres e-mail" type="email">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="add-university__input">
+    <mat-label>Numer telefonu</mat-label>
+    <input matInput formControlName="phoneNumber" placeholder="Wpisz numer telefonu">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="add-university__input">
+    <mat-label>Dostępne języki</mat-label>
+    <mat-select formControlName="availableLanguages" multiple>
+      <mat-option *ngFor="let language of availableLanguages" [value]="language">
+        {{ language }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button class="add-university__button"
+          mat-button color="primary"
+          (click)="addUniversity()"
+  >
+    Zapisz
+  </button>
+</form>

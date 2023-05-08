@@ -1,0 +1,10 @@
+<div class="universities">
+  <app-add-university *appRoleChecker="allRoles.ROLE_USER"
+                      (universityAdded)="onUniversityAdded($event)"
+
+  >
+  </app-add-university>
+
+  <app-universities-list>
+  </app-universities-list>
+</div>

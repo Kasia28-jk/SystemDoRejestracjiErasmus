@@ -1,0 +1,3 @@
+<section class="main-page" *ngIf="userContext$ | async as userContext">
+  <h3>Witaj {{userContext.name}}!</h3>
+</section>

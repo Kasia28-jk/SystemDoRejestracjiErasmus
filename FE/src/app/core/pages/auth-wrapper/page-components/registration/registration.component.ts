@@ -1,22 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {RegistrationService} from '../../../../services/registration.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {map, take, tap} from "rxjs";
+import {take, tap} from "rxjs";
 import {SignUpRequest} from "../../../../model/auth.model";
 import {SIGN_UP_ERROR} from "../../../../commons/message.commons";
+import {LoginService} from "../../../../services/login.service";
+import {UserContextService} from "../../../../services/user-context.service";
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
 
   public errorMessage: string | undefined;
 
   constructor(
     private router: Router,
+    private loginService: LoginService,
+    private userContextService: UserContextService,
     private registrationService: RegistrationService
   ) {
   }
@@ -28,9 +32,9 @@ export class RegistrationComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
-      surname: new FormControl('', Validators.required),
-      role: new FormControl('', Validators.required)
+      first_name: new FormControl('', Validators.required),
+      last_name: new FormControl('', Validators.required),
+      roles: new FormControl([], Validators.required)
     }, {updateOn: 'blur'});
   }
 
@@ -50,7 +54,16 @@ export class RegistrationComponent {
   }
 
   private handleSuccessfulEvent(value: SignUpRequest) {
-    // TODO - sending new login request and automatically logging user.
+    this.loginService.login({username: value.username, password: value.password})
+      .pipe(take(1))
+      .subscribe(res => {
+        if (!res.success) {
+          this.errorMessage = res.errorMessage;
+        } else {
+          this.userContextService.setLoggedUser(res.loggedUser!);
+          this.router.navigate(['/', 'erasmus']).then();
+        }
+      });
   }
 
   private handleUnsuccessfulResponse() {
