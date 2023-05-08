@@ -25,7 +25,7 @@ public class UniversityController {
         this.universityService = universityService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/api/v1/universities")
     public ResponseEntity<MessageResponse> saveUniversity(@RequestBody UniversityRequest universityRequest){
         try{
@@ -47,7 +47,7 @@ public class UniversityController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping("/api/v1/universities/all")
     public ResponseEntity<?> getAllUniversities() {
         try {

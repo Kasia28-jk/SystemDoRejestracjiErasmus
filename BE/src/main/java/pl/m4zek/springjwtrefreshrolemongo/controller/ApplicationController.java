@@ -34,7 +34,7 @@ public class ApplicationController {
 
     @Transactional
     @PostMapping(value = "/application", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> erasmusRegistration(@RequestPart List<MultipartFile> pdfFiles,
                                                  @RequestPart ApplicationRequest applicationRequest) {
         try {
@@ -47,7 +47,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/application/update")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateApplication(@RequestBody StatusUpdateRequest statusUpdateRequest){
         try {
             return ResponseEntity.ok(service.updateStatusApplication(statusUpdateRequest));
@@ -57,13 +57,13 @@ public class ApplicationController {
     }
 
     @GetMapping("/application/all")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ApplicationResponse>> findAll(){
         return ResponseEntity.ok(service.findAllApplication());
     }
 
     @GetMapping("/application/{owner_id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<ApplicationResponse> findApplication(@PathVariable String owner_id) {
         try {
             return ResponseEntity.ok(service.getApplication(owner_id));
@@ -73,7 +73,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/application/{pdf_id}/download")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Resource> getPDFFile(@PathVariable String pdf_id) {
         PdfFile pdfFile = service.findPdf(pdf_id);
 
