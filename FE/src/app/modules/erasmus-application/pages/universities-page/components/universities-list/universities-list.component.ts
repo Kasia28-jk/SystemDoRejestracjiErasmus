@@ -1,14 +1,17 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UniversityModel} from "../../../../model/university.model";
+import {HttpClient} from "@angular/common/http";
+import {take} from "rxjs";
+import {UniversityService} from "../../../../service/university.service";
 
 @Component({
   selector: 'app-universities-list',
   templateUrl: './universities-list.component.html',
   styleUrls: ['./universities-list.component.scss']
 })
-export class UniversitiesListComponent {
+export class UniversitiesListComponent implements OnInit {
 
-  universities: UniversityModel[] = [
+  allUniversities: UniversityModel[] = [
     {
       name: 'Uniwersytet Warszawski',
       description: 'Uniwersytet publiczny',
@@ -42,4 +45,19 @@ export class UniversitiesListComponent {
   ];
 
   displayedColumns: string[] = ['name', 'description', 'address', 'city', 'country', 'email', 'phoneNumber', 'availableLanguages'];
+
+  constructor(private readonly universityService: UniversityService) {
+  }
+
+  ngOnInit(): void {
+    this.universityService.getAll()
+      .pipe(take(1))
+      .subscribe(response => {
+        this.allUniversities = response;
+      });
+  }
+
+  public addUniversity(universityModel: UniversityModel) {
+    this.allUniversities.push(universityModel);
+  }
 }
