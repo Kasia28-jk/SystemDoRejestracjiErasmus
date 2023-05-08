@@ -10,6 +10,11 @@ spring:
       username: #<Username>
       password: # <Password>
       authentication-database: # <Authentication>
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 20MB
+      max-file-size: 2MB
 
 jwt:
   token:

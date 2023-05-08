@@ -19,13 +19,13 @@ public class TestController {
     }
 
     @GetMapping("/user/")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> userAccess(){
         return ResponseEntity.ok(new MessageResponse("USER Access"));
     }
 
     @GetMapping("/admin/")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> adminAccess(){
         return ResponseEntity.ok(new MessageResponse("ADMIN Access"));
     }

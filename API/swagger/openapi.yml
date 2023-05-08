@@ -20,10 +20,11 @@ servers:
 tags:
   - name: UserContextSecurity
     description: Everything about security in the user context
-  - name: Admin
-    description: Everything what admin can do
-  - name: User
-    description: Everything what user can do
+  - name: Application
+    description: Submission of documents for the trip
+  - name: Universities
+    description: All stuff about universities
+
 
 paths:
   /api/auth/register:
@@ -150,34 +151,12 @@ paths:
                   status:
                     type: integer
 
-  /api/test/user/:
-    get:
-      tags:
-        - User
-      summary: Test user role
-      responses:
-        '200':
-          description: Test complete successfully
-        '403':
-          description: Forbidden
-
-  /api/test/admin/:
-    get:
-      tags:
-        - Admin
-      summary: Test admin role
-      responses:
-        '200':
-          description: Test complete successfully
-        '403':
-          description: Forbidden
-
   /api/v1/universities:
     post:
       summary: Create a new university
       description: Endpoint for creating a new university in the system.
       tags:
-        - universities
+        - Universities
       requestBody:
         description: University details
         required: true
@@ -201,6 +180,8 @@ paths:
 
   /api/v1/universities/all:
     get:
+      tags:
+        - Universities
       summary: Get all universities
       description: Retrieve a list of all universities
       operationId: getAllUniversities
@@ -213,6 +194,126 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/University'
+        '400':
+          description: Bad request - Invalid input data
+        '500':
+          description: Internal server error - Unable to retrieve universities
+
+  /api/v1/application:
+    post:
+      summary: Add new application
+      description: Submission of documents for the trip
+      tags:
+        - Application
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                applicationRequest:
+                  description: Structure of json as in ApplicationRequest schema
+                  type: object
+                  $ref: '#/components/schemas/ApplicationRequest'
+                pdfFiles:
+                  type: file
+                  format: binary
+                  description: List with pdf files
+      responses:
+        '200':
+          description: The application was added correctly
+        '400':
+          description: Error message
+
+
+  /api/v1/application/update:
+    post:
+      summary: Update application status
+      tags:
+        - Application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusUpdateRequest'
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          description: Error message
+
+  /api/v1/application/all:
+    get:
+      tags:
+        - Application
+      summary: Get all application
+      description: Retrieve a list of all application
+      responses:
+        '200':
+          description: A list of applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          description: Bad request - Invalid input data
+        '500':
+          description: Internal server error - Unable to retrieve universities
+
+
+  /api/v1/application/{owner_id}:
+    get:
+      tags:
+        - Application
+      summary: Get one application using owner id
+      description: Retrieve a current application
+      parameters:
+        - in: path
+          name: owner_id
+          schema:
+            type: string
+          required: true
+          description: User id to get application
+      responses:
+        '200':
+          description: One application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+        '400':
+          description: Bad request - Invalid input data
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error - Unable to retrieve universities
+
+  /api/v1/application/{pdf_id}/download:
+    get:
+      tags:
+        - Application
+      summary: Download pdf file using id
+      description: Retrieve a pdf file
+      parameters:
+        - in: path
+          name: pdf_id
+          schema:
+            type: string
+          required: true
+          description: Id of the pdf file
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
         '400':
           description: Bad request - Invalid input data
         '500':
@@ -251,9 +352,79 @@ components:
         - email
         - password
 
+    StatusUpdateRequest:
+      type: object
+      properties:
+        applicationId:
+          type: string
+          description: Application id
+        status:
+          type: string
+          description:  SUBMITTED,  DISCUSSED, APPROVED, REJECTED
+      required:
+        - applicationId
+        - status
+
+    ApplicationRequest:
+      type: object
+      properties:
+        ownerId:
+          type: string
+          description: Id of the user who submits the documents
+        email:
+          type: string
+          description: user email
+        phoneNumber:
+          type: string
+          description: Student phone number
+        universities_ids:
+          type: array
+          items:
+           type: string
+          description: Id of the universities the student chose
+      required:
+        - ownerId
+        - email
+        - phoneNumber
+        - universities_ids
+
+
+    ApplicationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Application id
+        phoneNumber:
+          type: string
+          description: Phone number for the applicant
+        email:
+          type: string
+          description: Email for the applicant
+        status:
+          type: string
+          description: Application status
+        universities:
+          type: array
+          items:
+            $ref: '#/components/schemas/University'
+          description: List of universities a student would like to go to
+        files:
+          type: array
+          items:
+            properties:
+              file_name:
+                type: string
+              download_url:
+                type: string
+          description: List with file name and download url
+
     University:
       type: object
       properties:
+        id:
+          type: string
+          description: University id
         name:
           type: string
           description: The name of the university
@@ -373,6 +544,9 @@ components:
     AuthTokenResponseModel:
       type: object
       properties:
+        id:
+          type: string
+          description: User id
         token:
           type: string
           description: Json Web Token to be attached to each request
