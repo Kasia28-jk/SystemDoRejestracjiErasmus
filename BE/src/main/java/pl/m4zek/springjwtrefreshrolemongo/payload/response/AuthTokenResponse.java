@@ -4,6 +4,7 @@ import java.util.List;
 
 public class AuthTokenResponse {
 
+    private String id;
     private String token;
     private String type = "Bearer";
     private String refreshToken;
@@ -13,7 +14,8 @@ public class AuthTokenResponse {
     private String email;
     private List<String> roles;
 
-    public AuthTokenResponse(String token, String refreshToken, String firstName, String lastName, String username, String email, List<String> roles) {
+    public AuthTokenResponse(String id, String token, String refreshToken, String firstName, String lastName, String username, String email, List<String> roles) {
+        this.id = id;
         this.token = token;
         this.refreshToken = refreshToken;
         this.firstName = firstName;
@@ -21,6 +23,14 @@ public class AuthTokenResponse {
         this.username = username;
         this.email = email;
         this.roles = roles;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {

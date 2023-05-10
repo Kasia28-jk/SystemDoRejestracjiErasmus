@@ -1,27 +1,22 @@
 package pl.m4zek.springjwtrefreshrolemongo;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
-import pl.m4zek.springjwtrefreshrolemongo.model.Role;
-import pl.m4zek.springjwtrefreshrolemongo.payload.request.SignupRequest;
-import pl.m4zek.springjwtrefreshrolemongo.service.RoleService;
-import pl.m4zek.springjwtrefreshrolemongo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import pl.m4zek.springjwtrefreshrolemongo.model.Role;
+import pl.m4zek.springjwtrefreshrolemongo.payload.request.SignupRequest;
+import pl.m4zek.springjwtrefreshrolemongo.service.RoleService;
+import pl.m4zek.springjwtrefreshrolemongo.service.UserService;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 @SpringBootApplication
 public class SpringJwtRefreshRoleMongoApplication {
@@ -57,19 +52,24 @@ public class SpringJwtRefreshRoleMongoApplication {
 
 
         try {
-            InputStreamReader inputStreamReader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("employee.csv"));
-            CSVReader reader = new CSVReader(inputStreamReader);
-            String[] user;
-            while ((user = reader.readNext()) != null) {
+
+            FileReader fr = new FileReader("src/main/resources/employee.csv");
+            BufferedReader br = new BufferedReader(fr);
+            Stream<String> lines = br.lines();
+
+            lines.forEach(item -> {
+                String[] user = item.split(",");
+                List<String> roles = Arrays.asList(user[5].split("/"));
+
                 try {
-                    List<String> roles = Arrays.asList(user[5].split("/"));
                     userService.save(new SignupRequest(user[0], user[1],user[2],user[3],user[4], roles));
-                } catch (Exception e){
-                    logger.info("Initialize database: {}", e.getMessage());
+                    logger.info("Employee add to database from file: " + user[0] + " " + user[1]);
+                } catch (Exception e) {
+                    logger.warn("Unable to add employee to database: {}", e.getMessage());
                 }
-            }
-        } catch (IOException | CsvException e) {
-            logger.error("CSV read error: {}", e.getMessage());
+            });
+        } catch (IOException e) {
+            logger.error("CSV read: {}", e.getMessage());
         }
     }
 }
