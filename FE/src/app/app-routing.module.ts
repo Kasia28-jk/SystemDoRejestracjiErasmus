@@ -26,7 +26,8 @@ const routes: Routes = [
   {
     path: 'erasmus',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    // TYMCZASOWO WYŁĄCZONY GUARD
+    // canActivate: [AuthGuard],
     children: [
       {path: "", redirectTo: "main", pathMatch: "full"},
       {path: 'main', component: StudentMainPageComponent},

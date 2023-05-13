@@ -19,6 +19,7 @@ export class AuthGuard {
       .pipe(
         tap(loggedIn => {
           if (!loggedIn) {
+            // PRZY ODŚWIEŻENIU STRONY loggedIn staje się zawsze false co jest zupełnie bez sensu. Do poprawy
             this.router.navigate(['', 'auth', 'login']).then();
           }
         })

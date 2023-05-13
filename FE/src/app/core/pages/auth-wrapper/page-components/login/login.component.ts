@@ -26,7 +26,7 @@ export class LoginComponent {
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
-    }, {updateOn: 'blur'});
+    });
   }
 
   onSubmit() {

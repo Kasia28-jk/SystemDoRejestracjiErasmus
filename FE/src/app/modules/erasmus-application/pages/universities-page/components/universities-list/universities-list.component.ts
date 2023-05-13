@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {UniversityModel} from "../../../../model/university.model";
-import {HttpClient} from "@angular/common/http";
-import {take} from "rxjs";
-import {UniversityService} from "../../../../service/university.service";
+import { Component, OnInit } from '@angular/core';
+import { UniversityModel } from "../../../../model/university.model";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { take } from "rxjs";
+import { UniversityService } from "../../../../service/university.service";
+import { UserContextService } from 'src/app/core/services/user-context.service';
 
 @Component({
   selector: 'app-universities-list',
@@ -46,18 +47,30 @@ export class UniversitiesListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'description', 'address', 'city', 'country', 'email', 'phoneNumber', 'availableLanguages'];
 
-  constructor(private readonly universityService: UniversityService) {
+  constructor(private readonly universityService: UniversityService, private userContextService: UserContextService, private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
-    this.universityService.getAll()
-      .pipe(take(1))
-      .subscribe(response => {
-        this.allUniversities = response;
-      });
+    this.universityService.getAll().subscribe((universities) => {
+      console.log(universities);
+    });
   }
 
   public addUniversity(universityModel: UniversityModel) {
     this.allUniversities.push(universityModel);
+  }
+
+  temp() {
+    this.userContextService.getUserToken().subscribe((accessToken) => {
+      console.log(accessToken);
+      const httpHeaders = new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      });
+      this.httpClient.get<any>("/api/v1/universities", { headers: httpHeaders }).subscribe((response) => {
+        console.log(response);
+      });
+    });
   }
 }

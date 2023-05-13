@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserContextService } from '../../services/user-context.service';
 
 export interface NavType {
   name: string;
@@ -31,7 +32,14 @@ export class NavigationComponent {
   }
   public navigation = Object.keys(this.NAVIGATION);
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private userContextService: UserContextService) {
 
+  }
+
+  logout() {
+    // this.userContextService.logOutUser();
+    console.log(this.router.url);
+    console.log(this.userContextService.getUserContext());
+    
   }
 }

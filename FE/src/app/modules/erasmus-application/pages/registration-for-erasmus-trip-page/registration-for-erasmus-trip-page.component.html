@@ -1,4 +1,4 @@
-<form class="add-university">
+<form [formGroup]="registrationForm" class="add-university" (ngSubmit)="onSubmit()">
 
   <h4 class="add-university__header">
     Rejestracja na wyjazd
@@ -7,22 +7,44 @@
   <mat-form-field appearance="outline">
     <mat-label>Adres email</mat-label>
     <input matInput formControlName="email" placeholder="Adres email">
+    <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
+      Pole wymagane
+    </mat-error>
+    <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
+      Nieprawidłowy format adresu email
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Numer telefonu</mat-label>
     <input matInput formControlName="phoneNumber" placeholder="Numer telefonu">
+    <mat-error *ngIf="registrationForm.get('phoneNumber')?.hasError('required')">
+      Pole wymagane
+    </mat-error>
   </mat-form-field>
 
+
+  <!-- POWINNA BYĆ LISTA DODANYCH UCZELNI. PROBLEM JEST OBECNIE Z DODANIEM UCZELNI WIĘC NIE MAM CO NAWET WYŚWIETLIĆ -->
   <mat-form-field appearance="outline" >
     <mat-label>Nazwa uczelni</mat-label>
     <input matInput formControlName="universityName" placeholder="Nazwa uczelni">
+    <mat-error *ngIf="registrationForm.get('universityName')?.hasError('required')">
+      Pole wymagane
+    </mat-error>
   </mat-form-field>
-  
-  <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-  <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
 
-  <button class="add-university__button" mat-button color="primary">
-    Wyślij
-</button>
-  </form>
+  <div *ngIf="selectedFile">
+    <div>
+      <img [src]="getFileIcon()" alt="file icon" width="20" height="20"/>
+      {{ selectedFile.name }}
+    </div>
+  </div>
+
+  <button type="button" class="adding-file-button" mat-raised-button (click)="fileInput.click()">Wybierz dokument</button>
+  <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+
+  <button type="submit" class="add-university__button" mat-button color="primary" >
+    Wyślij formularz
+  </button>
+
+</form>

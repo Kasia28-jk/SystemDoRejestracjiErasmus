@@ -26,6 +26,7 @@
         type="email"
         class="form-control"
         formControlName="email"
+        autocomplete="email"
       />
     </div>
 
@@ -36,6 +37,7 @@
         type="text"
         class="form-control"
         formControlName="username"
+        autocomplete="username"
       />
     </div>
 
@@ -46,6 +48,7 @@
         type="password"
         class="form-control"
         formControlName="password"
+        autocomplete="current-password"
       />
     </div>
 
@@ -67,7 +70,7 @@
 
     <button type="submit" class="btn btn-primary">Zarejestruj</button>
   </form>
-  <a class="text-option"
-     routerLink="/auth/login"
-  > Masz już konto? Zaloguj się!</a>
+  <a class="text-option" routerLink="/auth/login">
+    Masz już konto? Zaloguj się!</a
+  >
 </div>
