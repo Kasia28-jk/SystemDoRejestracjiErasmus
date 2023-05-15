@@ -19,6 +19,9 @@ import {
   RegistrationForErasmusTripPageComponent
 } from './pages/registration-for-erasmus-trip-page/registration-for-erasmus-trip-page.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { YourApplicationStatusComponent } from './pages/student-main-page/components/your-application-status/your-application-status.component';
+import {MatIconModule} from "@angular/material/icon";
+import {RouterLink} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     AddUniversityComponent,
     UniversitiesListComponent,
     RegistrationForErasmusTripPageComponent,
-    RoleCheckerDirective
+    RoleCheckerDirective,
+    YourApplicationStatusComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +44,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatSelectModule,
     MatButtonModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule,
+    RouterLink
   ],
 })
 export class ErasmusApplicationModule {

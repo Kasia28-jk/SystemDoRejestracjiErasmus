@@ -1,0 +1,67 @@
+<div class="application-status" *ngIf="application; else applicationNotSetUpTemplate"
+     [ngClass]="'application-status--' + applicationStatus?.toLowerCase()"
+>
+
+  <div class="application-status__section">
+    <span class="application-status__label">Uczelnie</span>
+    <span class="application-status__university-name application-status__value">
+    1. Uniwersytet Warszawski - Polski, Angielski
+  </span>
+
+    <span class="application-status__university-name application-status__value">
+    2. Universidad Malaga - Angielski
+  </span>
+
+    <span class="application-status__university-name application-status__value">
+    3. Amsterdam University of Technology - Angielski, Niemiecki
+  </span>
+  </div>
+
+  <div class="application-status__section">
+    <span class="application-status__label">
+      Data złożenia
+    </span>
+
+    <span class="application-status__creation-date application-status__value">
+      15.05.2023
+    </span>
+  </div>
+
+  <div class="application-status__section">
+    <span class="application-status__label">
+      Status
+    </span>
+    <span class="application-status__status application-status__value">
+      Oczekiwanie
+    </span>
+  </div>
+
+  <div class="application-status__section">
+    <span class="application-status__label">
+      Dodatkowe informacje
+    </span>
+    <span class="application-status__status application-status__value">
+      Brak
+    </span>
+  </div>
+
+  <div class="application-status__section">
+    <span class="application-status__label">
+      Plik zgłoszeniowy
+    </span>
+    <mat-icon class="application-status__download">
+      description
+    </mat-icon>
+  </div>
+</div>
+
+
+<ng-template #applicationNotSetUpTemplate>
+  <div class="application-status application-status--not-set">
+    <h4>Aplikacja nie została złożona</h4>
+
+    <a routerLink="/erasmus/apply">
+      Zarejestruj się na wyjazd teraz!
+    </a>
+  </div>
+</ng-template>

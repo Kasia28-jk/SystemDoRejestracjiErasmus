@@ -1,0 +1,83 @@
+:host {
+  width: 100%;
+}
+
+.application-status {
+  display: flex;
+  width: 50%;
+  height: min-content;
+  min-height: 5rem;
+
+  flex-direction: column;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  padding: .75rem;
+  align-items: flex-start;
+  color: black;
+
+  &--accepted {
+    border: 2px solid #369e36;
+  }
+
+  &--rejected {
+    border: 2px solid #a01111;
+  }
+
+  &--in-progress {
+    border: 2px solid #dfa22c;
+  }
+
+  &__label {
+    font-size: .8rem;
+    color: #a7a0a0;
+  }
+
+  &__value {
+    font-size: 1.1rem;
+  }
+
+  &__section {
+    margin-bottom: .75rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__university-name {
+    font-weight: 600;
+    margin-bottom: .25rem;
+  }
+
+  &__download {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2rem;
+    color: #771B1B;
+
+    cursor: pointer;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+  }
+
+  &--not-set {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > h4 {
+      margin: 0;
+      margin-top: .75rem;
+    }
+
+    & a {
+      font-weight: 600;
+      color: orange;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+  }
+}

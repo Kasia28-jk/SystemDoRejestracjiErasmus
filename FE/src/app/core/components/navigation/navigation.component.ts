@@ -20,6 +20,10 @@ export interface Navigation {
 export class NavigationComponent {
 
   NAVIGATION: Navigation = {
+    mainPage: {
+      name: "Panel główny",
+      path: "/erasmus/main"
+    },
     registration: {
       name: "Rejestracja na wyjazd",
       path: "/erasmus/apply"
@@ -40,6 +44,6 @@ export class NavigationComponent {
     // this.userContextService.logOutUser();
     console.log(this.router.url);
     console.log(this.userContextService.getUserContext());
-    
+
   }
 }
