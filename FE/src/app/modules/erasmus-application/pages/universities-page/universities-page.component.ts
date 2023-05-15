@@ -17,6 +17,5 @@ export class UniversitiesPageComponent {
 
   onUniversityAdded(universityModel: UniversityModel) {
     this.universitiesListComponent!.addUniversity(universityModel);
-
   }
 }

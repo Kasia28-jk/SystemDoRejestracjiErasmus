@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { UniversityModel } from "../../../../model/university.model";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { take } from "rxjs";
-import { UniversityService } from "../../../../service/university.service";
-import { UserContextService } from 'src/app/core/services/user-context.service';
+import {Component, OnInit} from '@angular/core';
+import {UniversityModel} from "../../../../model/university.model";
+import {take} from "rxjs";
+import {UniversityService} from "../../../../service/university.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-universities-list',
@@ -12,65 +11,28 @@ import { UserContextService } from 'src/app/core/services/user-context.service';
 })
 export class UniversitiesListComponent implements OnInit {
 
-  allUniversities: UniversityModel[] = [
-    {
-      name: 'Uniwersytet Warszawski',
-      description: 'Uniwersytet publiczny',
-      address: 'Krakowskie Przedmieście 26/28',
-      city: 'Warszawa',
-      country: 'Polska',
-      email: 'uw@uw.edu.pl',
-      phoneNumber: '+48 22 552 40 00',
-      availableLanguages: ['polski', 'angielski']
-    },
-    {
-      name: 'Uniwersytet Jagielloński',
-      description: 'Uniwersytet publiczny',
-      address: 'ul. Gołębia 24',
-      city: 'Kraków',
-      country: 'Polska',
-      email: 'uj@uj.edu.pl',
-      phoneNumber: '+48 12 663 11 11',
-      availableLanguages: ['polski', 'angielski']
-    },
-    {
-      name: 'Harvard University',
-      description: 'University in Cambridge',
-      address: 'Massachusetts Hall, Cambridge,USs',
-      city: 'Cambridge',
-      country: 'USA',
-      email: 'harvard@harvard.edu',
-      phoneNumber: '+1 617-495-1000',
-      availableLanguages: ['angielski']
-    },
-  ];
+  dataSource = new MatTableDataSource<UniversityModel>([]);
+  allUniversities: UniversityModel[] = [];
 
   displayedColumns: string[] = ['name', 'description', 'address', 'city', 'country', 'email', 'phoneNumber', 'availableLanguages'];
 
-  constructor(private readonly universityService: UniversityService, private userContextService: UserContextService, private httpClient: HttpClient) {
+  constructor(private readonly universityService: UniversityService) {
   }
 
   ngOnInit(): void {
-    this.universityService.getAll().subscribe((universities) => {
-      console.log(universities);
-    });
+    this.loadAllUniversities();
   }
 
   public addUniversity(universityModel: UniversityModel) {
-    this.allUniversities.push(universityModel);
+    this.loadAllUniversities();
   }
 
-  temp() {
-    this.userContextService.getUserToken().subscribe((accessToken) => {
-      console.log(accessToken);
-      const httpHeaders = new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
+  public loadAllUniversities() {
+    this.universityService.getAll()
+      .pipe(take(1))
+      .subscribe(response => {
+        this.allUniversities = response;
+        this.dataSource.data = this.allUniversities;
       });
-      this.httpClient.get<any>("/api/v1/universities", { headers: httpHeaders }).subscribe((response) => {
-        console.log(response);
-      });
-    });
   }
 }

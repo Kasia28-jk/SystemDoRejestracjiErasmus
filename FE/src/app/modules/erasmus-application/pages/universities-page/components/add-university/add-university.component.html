@@ -1,5 +1,6 @@
 <form class="add-university"
       [formGroup]="universityForm"
+      #formDirective="ngForm"
 >
 
   <h4 class="add-university__header">
@@ -52,7 +53,7 @@
 
   <button class="add-university__button"
           mat-button color="primary"
-          (click)="addUniversity()"
+          (click)="addUniversity(formDirective)"
   >
     Zapisz
   </button>
