@@ -1,15 +1,21 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { UserContextService } from 'src/app/core/services/user-context.service';
+import { UniversityService } from '../../service/university.service';
 
-interface ApplicationModel {
+export interface ApplicationRequest {
+  ownerId: string;
   email: string;
   phoneNumber: string;
-  universityName: string;
-  selectedFile?: File;
+  universities_ids: string[];
+}
+
+export interface DataToPass {
+  applicationRequest: ApplicationRequest;
+  pdfFiles: File[];
 }
 
 @Component({
@@ -18,43 +24,60 @@ interface ApplicationModel {
   styleUrls: ['./registration-for-erasmus-trip-page.component.scss']
 })
 export class RegistrationForErasmusTripPageComponent {
-  registrationForm!: FormGroup;
-  selectedFile: File | undefined;
+  universities = new FormControl();
+  universitiesList: string[] = [];
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient, private userContextService: UserContextService,) { }
+  registrationForm!: FormGroup;
+  selectedFiles: File[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private httpClient: HttpClient,
+    private userContextService: UserContextService,
+    private readonly universityService: UniversityService
+  ) {}
 
   ngOnInit() {
+    this.loadAllUniversities();
     this.registrationForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required]],
-      universityName: ['', [Validators.required]]
+      universities: ['', [Validators.required]],
     });
   }
 
-  onFileSelected(event: Event) {
+  public onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
-    this.selectedFile = target.files?.[0];
+    this.selectedFiles = Array.from(target.files || []);
   }
 
-  onSubmit() {
-    const applicationModel: ApplicationModel = {
-      email: this.registrationForm.value.email,
-      phoneNumber: this.registrationForm.value.phoneNumber,
-      universityName: this.registrationForm.value.universityName,
-      selectedFile: this.selectedFile
-    };
-    this.addUniversity(applicationModel).subscribe(
-      (response) => {
-        console.log('University added successfully:', response);
-      },
-      (error) => {
-        console.error('Error while adding university:', error);
-      }
-    );
+  public onSubmit() {
+    this.userContextService.getUserContext().subscribe((data) => {
+      const applicationRequest: ApplicationRequest = {
+        ownerId: data.id,
+        email: this.registrationForm.value.email,
+        phoneNumber: this.registrationForm.value.phoneNumber,
+        universities_ids: this.universities.value,
+      };
+
+      const dataToPass: DataToPass = {
+        applicationRequest: applicationRequest,
+        pdfFiles: this.selectedFiles
+      };
+
+      this.addUniversity(dataToPass).subscribe(
+        (response) => {
+          console.log('University added successfully:', response);
+        },
+        (error) => {
+          console.error('Error while adding university:', error);
+        }
+      );
+    });
   }
-  
-  getFileIcon(): string {
-    const fileExtension = this.selectedFile?.name.split('.').pop();
+
+  public getFileIcon(file: File): string {
+    const fileExtension = file.name.split('.').pop();
     switch (fileExtension) {
       case 'pdf':
         return 'assets/icons/pdf.svg';
@@ -66,17 +89,31 @@ export class RegistrationForErasmusTripPageComponent {
     }
   }
 
-  public addUniversity(applicationModel: ApplicationModel): Observable<ApplicationModel> {
+  public loadAllUniversities() {
+    this.universityService
+      .getAll()
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.universitiesList = response.map((obj) => obj.name);
+      });
+  }
+
+  public addUniversity(data: DataToPass): Observable<any> {
     return this.userContextService.getUserToken().pipe(
       switchMap((accessToken) => {
-        const httpHeaders = new HttpHeaders({
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
+        const formData = new FormData();
+        formData.append('applicationRequest', JSON.stringify(data.applicationRequest));
+
+        data.pdfFiles.forEach((file, index) => {
+          formData.append(`pdfFiles`, file, file.name);
         });
-        return this.httpClient.post<ApplicationModel>('/api/v1/application', applicationModel, { headers: httpHeaders });
+
+        const httpHeaders = new HttpHeaders({
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data'
+        });
+        return this.httpClient.post('/api/v1/application', formData, { headers: httpHeaders });
       })
     );
   }
-
 }

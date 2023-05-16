@@ -4,16 +4,8 @@
 
   <div class="application-status__section">
     <span class="application-status__label">Uczelnie</span>
-    <span class="application-status__university-name application-status__value">
-    1. Uniwersytet Warszawski - Polski, Angielski
-  </span>
-
-    <span class="application-status__university-name application-status__value">
-    2. Universidad Malaga - Angielski
-  </span>
-
-    <span class="application-status__university-name application-status__value">
-    3. Amsterdam University of Technology - Angielski, Niemiecki
+    <span class="application-status__university-name application-status__value" *ngFor="let university of this.userApplicationResponse?.universities">
+      {{university.name}} - {{university.city}}
   </span>
   </div>
 
@@ -23,7 +15,7 @@
     </span>
 
     <span class="application-status__creation-date application-status__value">
-      15.05.2023
+      16.05.2023
     </span>
   </div>
 
@@ -32,7 +24,7 @@
       Status
     </span>
     <span class="application-status__status application-status__value">
-      Oczekiwanie
+      {{this.userApplicationResponse?.status}}
     </span>
   </div>
 
