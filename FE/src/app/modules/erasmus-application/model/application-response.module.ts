@@ -2,11 +2,11 @@ import { UniversityModel } from "./university.model";
 
 export interface ApplicationResponse {
     id: string;
-    phoneNumber: string;
-    email: string;
-    status: string;
-    universities: UniversityModel[];
-    files: FileTypes[]
+    phoneNumber?: string;
+    email?: string;
+    status?: string;
+    universities?: UniversityModel[];
+    files?: FileTypes[]
   }
 
   export interface FileTypes {

@@ -14,10 +14,8 @@ export class YourApplicationStatusComponent  implements OnInit
   applicationStatus: ApplicationStatus = ApplicationStatus.REJECTED;
   application: ApplicationModel | undefined = "!!!" as any;
 
-  //allUniversities: ApplicationResponse;
-  constructor(private yourApplicationStatusService: YourApplicationStatusService) {
-    //console.log(LoggedUserResponse.id)
-  }
+  userApplicationResponse: ApplicationResponse | undefined;
+  constructor(private yourApplicationStatusService: YourApplicationStatusService) {}
 
   ngOnInit(): void {
     this.loadStatus();
@@ -25,8 +23,9 @@ export class YourApplicationStatusComponent  implements OnInit
 
   public loadStatus()
   {
-    console.log("cos");
-    const cos = this.yourApplicationStatusService.getStatus();
-    console.log(cos);
+    this.yourApplicationStatusService.getStatus()
+      .subscribe(response => {
+        this.userApplicationResponse = response;
+      });
   }
 }
