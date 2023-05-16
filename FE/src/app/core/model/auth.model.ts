@@ -1,6 +1,7 @@
 import {Role} from "../../modules/erasmus-application/model/roles.enum";
 
 export interface LoggedUserResponse {
+  id: string,
   token: string
   refreshToken: string
   firstName: string
