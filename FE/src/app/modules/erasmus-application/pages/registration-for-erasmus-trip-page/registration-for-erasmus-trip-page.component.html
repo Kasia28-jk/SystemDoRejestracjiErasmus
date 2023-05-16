@@ -1,12 +1,13 @@
-<form [formGroup]="registrationForm" class="add-university" (ngSubmit)="onSubmit()">
-
-  <h4 class="add-university__header">
-    Rejestracja na wyjazd
-  </h4>
+<form
+  [formGroup]="registrationForm"
+  class="add-university"
+  (ngSubmit)="onSubmit()"
+>
+  <h4 class="add-university__header">Rejestracja na wyjazd</h4>
 
   <mat-form-field appearance="outline">
     <mat-label>Adres email</mat-label>
-    <input matInput formControlName="email" placeholder="Adres email">
+    <input matInput formControlName="email" placeholder="Adres email" />
     <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
       Pole wymagane
     </mat-error>
@@ -17,34 +18,58 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Numer telefonu</mat-label>
-    <input matInput formControlName="phoneNumber" placeholder="Numer telefonu">
-    <mat-error *ngIf="registrationForm.get('phoneNumber')?.hasError('required')">
+    <input
+      matInput
+      formControlName="phoneNumber"
+      placeholder="Numer telefonu"
+    />
+    <mat-error
+      *ngIf="registrationForm.get('phoneNumber')?.hasError('required')"
+    >
       Pole wymagane
     </mat-error>
   </mat-form-field>
 
-
-  <!-- POWINNA BYĆ LISTA DODANYCH UCZELNI. PROBLEM JEST OBECNIE Z DODANIEM UCZELNI WIĘC NIE MAM CO NAWET WYŚWIETLIĆ -->
-  <mat-form-field appearance="outline" >
-    <mat-label>Nazwa uczelni</mat-label>
-    <input matInput formControlName="universityName" placeholder="Nazwa uczelni">
-    <mat-error *ngIf="registrationForm.get('universityName')?.hasError('required')">
-      Pole wymagane
-    </mat-error>
+  <mat-form-field appearance="fill">
+    <mat-label>universities</mat-label>
+    <mat-select [formControl]="universities" multiple>
+      <mat-option
+        *ngFor="let university of universitiesList"
+        [value]="university"
+        >{{ university }}</mat-option
+      >
+    </mat-select>
   </mat-form-field>
 
   <div *ngIf="selectedFile">
     <div>
-      <img [src]="getFileIcon()" alt="file icon" width="20" height="20"/>
+      <img [src]="getFileIcon()" alt="file icon" width="20" height="20" />
       {{ selectedFile.name }}
     </div>
   </div>
 
-  <button type="button" class="adding-file-button" mat-raised-button (click)="fileInput.click()">Wybierz dokument</button>
-  <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+  <button
+    type="button"
+    class="adding-file-button"
+    mat-raised-button
+    (click)="fileInput.click()"
+  >
+    Wybierz dokument
+  </button>
+  <input
+    hidden
+    (change)="onFileSelected($event)"
+    #fileInput
+    type="file"
+    id="file"
+  />
 
-  <button type="submit" class="add-university__button" mat-button color="primary" >
+  <button
+    type="submit"
+    class="add-university__button"
+    mat-button
+    color="primary"
+  >
     Wyślij formularz
   </button>
-
 </form>

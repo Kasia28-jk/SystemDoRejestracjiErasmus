@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ApplicationStatus} from "../../../../model/application-status.enum";
 import {ApplicationModel} from "../../../../model/application.model";
+import { UniversityService } from 'src/app/modules/erasmus-application/service/university.service';
 
 @Component({
   selector: 'app-your-application-status',
@@ -10,5 +11,4 @@ import {ApplicationModel} from "../../../../model/application.model";
 export class YourApplicationStatusComponent {
   applicationStatus: ApplicationStatus = ApplicationStatus.REJECTED;
   application: ApplicationModel | undefined = "!!!" as any;
-
 }
