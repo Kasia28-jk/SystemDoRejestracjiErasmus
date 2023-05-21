@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, map, Observable } from 'rxjs';
 import { UserContextModel, UserContextWrapper } from '../model/user.model';
 import { LoggedUserResponse } from '../model/auth.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class UserContextService {
 
   private currentUser$: BehaviorSubject<UserContextWrapper> = new BehaviorSubject<UserContextWrapper>({ loggedIn: false });
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   public isLoggedIn(): Observable<boolean> {
     return this.currentUser$.pipe(
@@ -53,5 +54,7 @@ export class UserContextService {
 
   public logOutUser() {
     this.currentUser$.next({ loggedIn: false });
+    this.router.navigate(['/auth/login'])
+    console.log(this.currentUser$.getValue().userContext?.token)
   }
 }

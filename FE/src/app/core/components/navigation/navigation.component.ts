@@ -41,9 +41,6 @@ export class NavigationComponent {
   }
 
   logout() {
-    // this.userContextService.logOutUser();
-    console.log(this.router.url);
-    console.log(this.userContextService.getUserContext());
-
+    this.userContextService.logOutUser();
   }
 }

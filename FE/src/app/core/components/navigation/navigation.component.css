@@ -17,10 +17,19 @@ a {
   margin: auto;
   background-color: transparent;
   text-decoration: none;
-  color: var(--usual-blue);
   font-weight: 700;
   letter-spacing: 2px;
   border-radius: 5px;
+  cursor:pointer;
+}
+
+span {
+  color: var(--usual-blue);
+  font-weight: 700;
+}
+
+span:hover {
+  color: var(--dark-blue);
 }
 
 a:hover {

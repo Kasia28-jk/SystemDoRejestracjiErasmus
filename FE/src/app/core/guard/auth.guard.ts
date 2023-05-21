@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable, tap} from 'rxjs';
-import {UserContextService} from "../services/user-context.service";
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable, tap } from 'rxjs';
+import { UserContextService } from '../services/user-context.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard {
+export class AuthGuard implements CanActivate {
 
   constructor(private userContextService: UserContextService,
               private router: Router) {
@@ -19,10 +19,9 @@ export class AuthGuard {
       .pipe(
         tap(loggedIn => {
           if (!loggedIn) {
-            // PRZY ODŚWIEŻENIU STRONY loggedIn staje się zawsze false co jest zupełnie bez sensu. Do poprawy
-            this.router.navigate(['', 'auth', 'login']).then();
+            this.router.navigate(['', 'auth', 'login']);
           }
         })
-      )
+      );
   }
 }
