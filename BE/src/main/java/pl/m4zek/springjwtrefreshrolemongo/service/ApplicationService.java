@@ -11,6 +11,7 @@ import pl.m4zek.springjwtrefreshrolemongo.payload.request.StatusUpdateRequest;
 import pl.m4zek.springjwtrefreshrolemongo.payload.response.ApplicationResponse;
 import pl.m4zek.springjwtrefreshrolemongo.repository.ApplicationRepository;
 import pl.m4zek.springjwtrefreshrolemongo.repository.PdfFileRepository;
+import pl.m4zek.springjwtrefreshrolemongo.repository.UserRepository;
 
 import java.io.IOException;
 import java.util.*;
@@ -22,7 +23,6 @@ public class ApplicationService {
 
     private final PdfFileRepository pdfFilesRepository;
     private final ApplicationRepository applicationRepository;
-
     private final UniversityService universityService;
     private final UserService userService;
 
@@ -33,7 +33,7 @@ public class ApplicationService {
         this.userService = userService;
     }
 
-    public Application createApplication(List<MultipartFile> files, ApplicationRequest applicationRequest) throws RuntimeException{
+    public ApplicationResponse createApplication(List<MultipartFile> files, ApplicationRequest applicationRequest) throws RuntimeException{
             if(applicationRepository.existsByOwnerId(applicationRequest.getOwnerId())){
                 throw new RuntimeException("You've already submitted your application");
             }
@@ -66,8 +66,11 @@ public class ApplicationService {
 
             List<University> universities = applicationRequest.getUniversities_ids().stream()
                     .map(universityService::findById)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
 
+            if(universities.isEmpty())
+                throw new RuntimeException("Cannot find Universities with given ids");
 
             Application application = new Application();
             application.setOwnerId(user.getId());
@@ -76,15 +79,16 @@ public class ApplicationService {
             application.setUniversities(universities);
             application.setStatus(Status.SUBMITTED);
             application.setPdfFiles(pdfFiles);
-            Application newApplication = applicationRepository.save(application);
 
+            ApplicationResponse newApplication = new ApplicationResponse(applicationRepository.save(application));
+            newApplication.setApplicantSurname(user.getLast_name());
+            newApplication.setApplicantName(user.getFirst_name());
             log.info("A new application has been added");
             return newApplication;
     }
 
 
     public ApplicationResponse updateStatusApplication(StatusUpdateRequest status) throws Exception {
-
         Application application = applicationRepository.findById(status.getApplicationId()).orElse(null);
 
         if(application != null){
@@ -95,15 +99,26 @@ public class ApplicationService {
             throw new Exception("Application with given id not found");
         }
 
-        return new ApplicationResponse(application);
+        User user = userService.findUserById(application.getOwnerId());
+        ApplicationResponse newResponse = new ApplicationResponse(application);
+        newResponse.setApplicantName(user.getFirst_name());
+        newResponse.setApplicantSurname(user.getLast_name());
+        return newResponse;
     }
 
     public List<ApplicationResponse> findAllApplication(){
         return applicationRepository.findAll().stream()
-                .map(ApplicationResponse::new).collect(Collectors.toList());
+                .map(item ->{
+                    ApplicationResponse newResponse = new ApplicationResponse(item);
+                    User user = userService.findUserById(item.getOwnerId());
+                    newResponse.setApplicantName(user.getFirst_name());
+                    newResponse.setApplicantSurname(user.getLast_name());
+                    return newResponse;
+                }).collect(Collectors.toList());
     }
 
     public ApplicationResponse getApplication(String owner_id) throws NotFound {
+
         if(!applicationRepository.existsByOwnerId(owner_id)){
             throw new NotFound();
         }
@@ -112,8 +127,11 @@ public class ApplicationService {
         if(application == null){
             throw new NotFound();
         }
-
-        return new ApplicationResponse(application);
+        User user = userService.findUserById(owner_id);
+        ApplicationResponse newResponse = new ApplicationResponse(application);
+        newResponse.setApplicantName(user.getFirst_name());
+        newResponse.setApplicantSurname(user.getLast_name());
+        return newResponse;
     }
 
     public PdfFile findPdf(String pdfId) {
