@@ -380,7 +380,7 @@ components:
         universities_ids:
           type: array
           items:
-           type: string
+            type: string
           description: Id of the universities the student chose
       required:
         - ownerId
@@ -395,6 +395,12 @@ components:
         id:
           type: string
           description: Application id
+        applicantName:
+          type: string
+          description: Applicant name
+        applicantSurname:
+          type: string
+          description: Applicant surname
         phoneNumber:
           type: string
           description: Phone number for the applicant
@@ -404,6 +410,9 @@ components:
         status:
           type: string
           description: Application status
+        creationDate:
+          type: string
+          format: date
         universities:
           type: array
           items:

@@ -5,6 +5,7 @@
     <a
       [ngClass]="router.url == NAVIGATION[key].path ? 'active' : ''"
       [routerLink]="NAVIGATION[key].path"
+      *appRoleChecker="NAVIGATION[key].requiredRole"
       >{{ NAVIGATION[key].name }}</a
     >
   </div>

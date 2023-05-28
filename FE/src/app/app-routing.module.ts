@@ -12,7 +12,12 @@ import {
 import {
   UniversitiesPageComponent
 } from "./modules/erasmus-application/pages/universities-page/universities-page.component";
-import { RegistrationForErasmusTripPageComponent } from './modules/erasmus-application/pages/registration-for-erasmus-trip-page/registration-for-erasmus-trip-page.component';
+import {
+  RegistrationForErasmusTripPageComponent
+} from './modules/erasmus-application/pages/registration-for-erasmus-trip-page/registration-for-erasmus-trip-page.component';
+import {
+  ApplicationsListPageComponent
+} from "./modules/erasmus-application/pages/applications-list-page/applications-list-page.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'erasmus', pathMatch: 'full'},
@@ -32,6 +37,7 @@ const routes: Routes = [
       {path: 'main', component: StudentMainPageComponent},
       {path: 'universities', component: UniversitiesPageComponent},
       {path: 'apply', component: RegistrationForErasmusTripPageComponent},
+      {path: 'applications', component: ApplicationsListPageComponent},
     ]
   },
   {path: '**', pathMatch: 'full', component: PagenotfoundComponent},

@@ -2,7 +2,10 @@ import { UniversityModel } from "./university.model";
 
 export interface ApplicationResponse {
     id: string;
+    applicantName: string,
+    applicantSurname: string,
     phoneNumber?: string;
+    creationDate: Date,
     email?: string;
     status?: string;
     universities?: UniversityModel[];

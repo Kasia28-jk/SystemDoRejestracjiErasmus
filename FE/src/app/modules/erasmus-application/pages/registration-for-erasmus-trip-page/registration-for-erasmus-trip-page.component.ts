@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { UserContextService } from 'src/app/core/services/user-context.service';
-import { UniversityService } from '../../service/university.service';
-import { UniversityModel } from '../../model/university.model';
+import {Component} from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import {Observable, tap} from 'rxjs';
+import {switchMap, take} from 'rxjs/operators';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
+import {UserContextService} from 'src/app/core/services/user-context.service';
+import {UniversityService} from '../../service/university.service';
+import {UniversityModel} from '../../model/university.model';
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export interface ApplicationRequest {
   ownerId: string;
@@ -33,10 +35,13 @@ export class RegistrationForErasmusTripPageComponent {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar,
     private httpClient: HttpClient,
     private userContextService: UserContextService,
     private readonly universityService: UniversityService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.loadAllUniversities();
@@ -65,21 +70,21 @@ export class RegistrationForErasmusTripPageComponent {
   public onSubmit() {
     this.userContextService.getUserContext().subscribe((data) => {
       const selectedUniversities: string[] = this.universities.value.map((university: { id: string; }) => university.id);
-  
+
       const applicationRequest: ApplicationRequest = {
         ownerId: data.id,
         email: this.registrationForm.value.email,
         phoneNumber: this.registrationForm.value.phoneNumber,
         universities_ids: selectedUniversities,
       };
-  
+
       console.log(selectedUniversities);
-  
+
       const dataToPass: DataToPass = {
         applicationRequest: applicationRequest,
         pdfFiles: this.selectedFiles,
       };
-  
+
       this.addUniversity(dataToPass).subscribe(
         (response) => {
           console.log('University added successfully:', response);
@@ -90,7 +95,7 @@ export class RegistrationForErasmusTripPageComponent {
       );
     });
   }
-  
+
 
   public getFileIcon(file: File): string {
     const fileExtension = file.name.split('.').pop();
@@ -112,7 +117,7 @@ export class RegistrationForErasmusTripPageComponent {
         console.log(data.applicationRequest);
         const formData: FormData = new FormData();
 
-        const jsonBlob: Blob = new Blob([JSON.stringify(data.applicationRequest)], { type: 'application/json' })
+        const jsonBlob: Blob = new Blob([JSON.stringify(data.applicationRequest)], {type: 'application/json'})
 
         formData.append('applicationRequest', jsonBlob);
 
@@ -123,8 +128,15 @@ export class RegistrationForErasmusTripPageComponent {
         const httpHeaders = new HttpHeaders({
           Authorization: `Bearer ${accessToken}`,
         });
-        
-        return this.httpClient.post('/api/v1/application', formData, { headers: httpHeaders });
+
+        return this.httpClient.post('/api/v1/application', formData, {headers: httpHeaders})
+          .pipe(
+            tap(() => {
+                this.snackBar.open("Poprawnie złożono zgłoszenie!", "Sukces", {duration: 2000});
+                this.router.navigate(['erasmus']).then();
+              }
+            )
+          )
       })
     );
   }

@@ -22,6 +22,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { YourApplicationStatusComponent } from './pages/student-main-page/components/your-application-status/your-application-status.component';
 import {MatIconModule} from "@angular/material/icon";
 import {RouterLink} from "@angular/router";
+import { ApplicationsListPageComponent } from './pages/applications-list-page/applications-list-page.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {RouterLink} from "@angular/router";
     UniversitiesListComponent,
     RegistrationForErasmusTripPageComponent,
     RoleCheckerDirective,
-    YourApplicationStatusComponent
+    YourApplicationStatusComponent,
+    ApplicationsListPageComponent
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,9 @@ import {RouterLink} from "@angular/router";
     MatIconModule,
     RouterLink
   ],
+  exports: [
+    RoleCheckerDirective
+  ]
 })
 export class ErasmusApplicationModule {
 }
