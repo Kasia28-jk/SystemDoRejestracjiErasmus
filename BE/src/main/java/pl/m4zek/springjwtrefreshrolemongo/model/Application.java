@@ -3,6 +3,7 @@ package pl.m4zek.springjwtrefreshrolemongo.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -24,7 +25,10 @@ public class Application {
 
     private List<PdfFile> pdfFiles;
 
+    private LocalDateTime createAt;
+
     public Application() {
+        this.createAt = LocalDateTime.now();
     }
 
     public Status getStatus() {
@@ -68,6 +72,14 @@ public class Application {
 
     public String getId() {
         return id;
+    }
+
+    public LocalDateTime getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(LocalDateTime createAt) {
+        this.createAt = createAt;
     }
 
     public void setId(String id) {
