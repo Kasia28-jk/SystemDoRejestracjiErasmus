@@ -78,14 +78,12 @@ export class RegistrationForErasmusTripPageComponent {
         universities_ids: selectedUniversities,
       };
 
-      console.log(selectedUniversities);
-
       const dataToPass: DataToPass = {
         applicationRequest: applicationRequest,
         pdfFiles: this.selectedFiles,
       };
 
-      this.addUniversity(dataToPass).subscribe(
+      this.addApplication(dataToPass).subscribe(
         (response) => {
           console.log('University added successfully:', response);
         },
@@ -110,7 +108,7 @@ export class RegistrationForErasmusTripPageComponent {
     }
   }
 
-  public addUniversity(data: DataToPass): Observable<any> {
+  public addApplication(data: DataToPass): Observable<any> {
     return this.userContextService.getUserToken().pipe(
       switchMap((accessToken: string) => {
 
@@ -132,8 +130,11 @@ export class RegistrationForErasmusTripPageComponent {
         return this.httpClient.post('/api/v1/application', formData, {headers: httpHeaders})
           .pipe(
             tap(() => {
-                this.snackBar.open("Poprawnie złożono zgłoszenie!", "Sukces", {duration: 2000});
-                this.router.navigate(['erasmus']).then();
+              this.snackBar.open("Poprawnie złożono zgłoszenie!", "Sukces", {duration: 2000});
+              this.router.navigate(['erasmus']).then();
+              this.registrationForm.reset(); // Wyczyszczenie pól formularza
+              this.universities.reset(); // Wyczyszczenie pola universities
+              this.selectedFiles = []; // Wyczyszczenie wybranych plików
               }
             )
           )

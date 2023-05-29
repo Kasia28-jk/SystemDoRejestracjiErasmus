@@ -36,6 +36,7 @@ export class ApplicationsService {
     return applicationResponses.map(
       applicationRes => {
         return {
+          applicationId: applicationRes.id,
           universities: applicationRes.universities?.map(university => university.name) || [],
           name: applicationRes.applicantName || "Jan",
           surname: applicationRes.applicantSurname || "Kazimierz",
