@@ -6,6 +6,7 @@ import {ApplicationModel} from "../model/application.model";
 import {UserContextService} from "../../../core/services/user-context.service";
 import {ApplicationResponse} from "../model/application-response.module";
 import {ApplicationStatus} from "../model/application-status.enum";
+import { ApplicationStatusRequest } from '../pages/applications-list-page/applications-list-page.component';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,19 @@ export class ApplicationsService {
         }
       }
     )
+  }
+
+  public appUpdate(applicationRequest: ApplicationStatusRequest): Observable<ApplicationStatusRequest> {
+    return this.userContextService.getUserToken().pipe(
+      switchMap((accessToken) => {
+        const httpHeaders = new HttpHeaders({
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        });
+        return this.httpClient.post<ApplicationStatusRequest>('/api/v1/application/update', applicationRequest, { headers: httpHeaders });
+      })
+    );
   }
 
   private translateStatus(status: ApplicationStatus): string {

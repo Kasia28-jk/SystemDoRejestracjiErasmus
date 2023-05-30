@@ -26,6 +26,23 @@ export class YourApplicationStatusComponent  implements OnInit
     this.yourApplicationStatusService.getStatus()
       .subscribe(response => {
         this.userApplicationResponse = response;
+        console.log(this.userApplicationResponse);
       });
   }
+  
+  getApplicationStatusLabel(status: any): string {
+    switch (status) {
+      case ApplicationStatus.REJECTED:
+        return 'ODRZUCONO';
+      case ApplicationStatus.SUBMITTED:
+        return 'ZŁOŻONO';
+      case ApplicationStatus.DISCUSSED:
+        return 'ROZPATRYWANA';
+      case ApplicationStatus.APPROVED:
+        return 'ZAAKCEPTOWANO';
+      default:
+        return 'BRAK';
+    }
+  }
+  
 }

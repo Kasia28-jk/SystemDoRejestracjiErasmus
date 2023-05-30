@@ -20,16 +20,13 @@
       16.05.2023
     </span>
   </div>
-
   <div class="application-status__section">
-    <span class="application-status__label"> Status </span>
+    <span class="application-status__label">Status</span>
     <span class="application-status__status application-status__value">
-      {{
-        this.userApplicationResponse?.status == "SUBMITTED" ? "ZŁOŻONO" : "BRAK"
-      }}
+      {{ getApplicationStatusLabel(userApplicationResponse?.status) }}
     </span>
   </div>
-
+  
   <div
     class="application-status__section"
     *ngFor="let university of this.userApplicationResponse?.universities"

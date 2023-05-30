@@ -79,7 +79,7 @@ export class ApplicationsListPageComponent implements OnInit {
     };
   
     console.log(appStatusReq);
-    this.appUpdate(appStatusReq).subscribe(
+    this.applicationsService.appUpdate(appStatusReq).subscribe(
       response => {
         console.log('Application status updated successfully', response);
         // Update the status in the allApplications array
@@ -109,16 +109,4 @@ export class ApplicationsListPageComponent implements OnInit {
     }
   }
   
-  public appUpdate(applicationRequest: ApplicationStatusRequest): Observable<ApplicationStatusRequest> {
-    return this.userContextService.getUserToken().pipe(
-      switchMap((accessToken) => {
-        const httpHeaders = new HttpHeaders({
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
-        });
-        return this.httpClient.post<ApplicationStatusRequest>('/api/v1/application/update', applicationRequest, { headers: httpHeaders });
-      })
-    );
-  }
 }
