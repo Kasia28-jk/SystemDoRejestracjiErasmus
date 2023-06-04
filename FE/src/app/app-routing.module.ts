@@ -18,6 +18,7 @@ import {
 import {
   ApplicationsListPageComponent
 } from "./modules/erasmus-application/pages/applications-list-page/applications-list-page.component";
+import { ListUsersComponent } from './modules/erasmus-application/pages/list-users/list-users.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'erasmus', pathMatch: 'full'},
@@ -38,6 +39,7 @@ const routes: Routes = [
       {path: 'universities', component: UniversitiesPageComponent},
       {path: 'apply', component: RegistrationForErasmusTripPageComponent},
       {path: 'applications', component: ApplicationsListPageComponent},
+      {path: 'userslist', component: ListUsersComponent},
     ]
   },
   {path: '**', pathMatch: 'full', component: PagenotfoundComponent},

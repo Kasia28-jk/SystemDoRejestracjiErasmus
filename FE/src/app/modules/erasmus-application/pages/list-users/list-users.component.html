@@ -1,0 +1,8 @@
+<h4 class="header">Lista użytkowników</h4>
+<div *ngfor="let user of users">
+<strong>Imie użytkownika: {{user.first_name}}</strong><br/>
+<strong>Nazwisko użytkownika: {{user.last_name}}</strong><br/>
+<strong>Rola: {{user.roles}}</strong><br/>
+<strong>Nazwa użytkownika: : {{user.username}}</strong><br/>
+<strong>Adres email: {{user.email}}</strong><br/>
+</div>

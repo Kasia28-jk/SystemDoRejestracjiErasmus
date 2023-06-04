@@ -42,6 +42,11 @@ export class NavigationComponent {
       path: "/erasmus/applications",
       requiredRole: Role.ROLE_ADMIN
     },
+    users: {
+      name: "Lista użytkowników",
+      path: "/erasmus/userslist",
+      requiredRole: Role.ROLE_ADMIN
+    },
 
   }
   public navigation = Object.keys(this.NAVIGATION);
