@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import pl.m4zek.springjwtrefreshrolemongo.model.Role;
 import pl.m4zek.springjwtrefreshrolemongo.model.User;
 import pl.m4zek.springjwtrefreshrolemongo.payload.request.SignupRequest;
+import pl.m4zek.springjwtrefreshrolemongo.payload.response.UserResponse;
 import pl.m4zek.springjwtrefreshrolemongo.repository.RoleRepository;
 import pl.m4zek.springjwtrefreshrolemongo.repository.UserRepository;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,4 +58,9 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    public List<UserResponse> findAllUsers(){
+        return userRepository.findAll().stream()
+                .map(UserResponse::new)
+                .collect(Collectors.toList());
+    }
 }

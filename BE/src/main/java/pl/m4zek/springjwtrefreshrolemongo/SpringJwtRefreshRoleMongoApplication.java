@@ -50,6 +50,7 @@ public class SpringJwtRefreshRoleMongoApplication {
                 "A user role is a predefined category that can be assigned to " +
                         "users on the basis of their job title or some other criteria"));
 
+        Role superAdmin = roleService.save(new Role("SUPERADMIN", "Some description"));
 
         try {
 

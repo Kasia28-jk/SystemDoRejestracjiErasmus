@@ -11,10 +11,12 @@ import pl.m4zek.springjwtrefreshrolemongo.payload.request.StatusUpdateRequest;
 import pl.m4zek.springjwtrefreshrolemongo.payload.response.ApplicationResponse;
 import pl.m4zek.springjwtrefreshrolemongo.repository.ApplicationRepository;
 import pl.m4zek.springjwtrefreshrolemongo.repository.PdfFileRepository;
-import pl.m4zek.springjwtrefreshrolemongo.repository.UserRepository;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,11 +28,14 @@ public class ApplicationService {
     private final UniversityService universityService;
     private final UserService userService;
 
-    public ApplicationService(PdfFileRepository pdfFilesRepository, ApplicationRepository applicationRepository, UniversityService universityService, UserService userService) {
+    private final EmailService emailService;
+
+    public ApplicationService(PdfFileRepository pdfFilesRepository, ApplicationRepository applicationRepository, UniversityService universityService, UserService userService, EmailService emailService) {
         this.pdfFilesRepository = pdfFilesRepository;
         this.applicationRepository = applicationRepository;
         this.universityService = universityService;
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     public ApplicationResponse createApplication(List<MultipartFile> files, ApplicationRequest applicationRequest) throws RuntimeException{
@@ -103,6 +108,12 @@ public class ApplicationService {
         ApplicationResponse newResponse = new ApplicationResponse(application);
         newResponse.setApplicantName(user.getFirst_name());
         newResponse.setApplicantSurname(user.getLast_name());
+
+        emailService.sendEmailWithNewApplicationStatus(
+                user.getEmail(),
+                "TWOJE ZGŁOSZENIE ZYSKAŁO NOWY STATUS - ERASMUS",
+                newResponse.getStatus());
+        log.info("The status of the " + newResponse.getId() + " application has been updated to " + newResponse.getStatus());
         return newResponse;
     }
 
