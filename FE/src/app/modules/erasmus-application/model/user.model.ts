@@ -5,4 +5,11 @@ export interface UserResponse {
     roles: string[];
     email: string;
   }
-  
+
+export interface UserModel {
+  name: string;
+  surname: string;
+  role: string;
+  email: string;
+}
+

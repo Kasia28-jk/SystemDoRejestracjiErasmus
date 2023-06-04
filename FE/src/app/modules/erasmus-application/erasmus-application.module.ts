@@ -19,10 +19,13 @@ import {
   RegistrationForErasmusTripPageComponent
 } from './pages/registration-for-erasmus-trip-page/registration-for-erasmus-trip-page.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { YourApplicationStatusComponent } from './pages/student-main-page/components/your-application-status/your-application-status.component';
+import {
+  YourApplicationStatusComponent
+} from './pages/student-main-page/components/your-application-status/your-application-status.component';
 import {MatIconModule} from "@angular/material/icon";
 import {RouterLink} from "@angular/router";
-import { ApplicationsListPageComponent } from './pages/applications-list-page/applications-list-page.component';
+import {ApplicationsListPageComponent} from './pages/applications-list-page/applications-list-page.component';
+import {ListUsersComponent} from "./pages/list-users/list-users.component";
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { ApplicationsListPageComponent } from './pages/applications-list-page/ap
     RegistrationForErasmusTripPageComponent,
     RoleCheckerDirective,
     YourApplicationStatusComponent,
-    ApplicationsListPageComponent
+    ApplicationsListPageComponent,
+    ListUsersComponent
   ],
   imports: [
     CommonModule,

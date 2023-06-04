@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 import { UserContextService } from 'src/app/core/services/user-context.service';
-import { UserResponse } from '../model/user-response';
+import { UserResponse } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'

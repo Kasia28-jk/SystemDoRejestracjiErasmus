@@ -1,8 +1,33 @@
-<h4 class="header">Lista użytkowników</h4>
-<div *ngfor="let user of users">
-<strong>Imie użytkownika: {{user.first_name}}</strong><br/>
-<strong>Nazwisko użytkownika: {{user.last_name}}</strong><br/>
-<strong>Rola: {{user.roles}}</strong><br/>
-<strong>Nazwa użytkownika: : {{user.username}}</strong><br/>
-<strong>Adres email: {{user.email}}</strong><br/>
+<div class="users-list" *appRoleChecker="allRoles.ROLE_ADMIN">
+  <h4 class="users-list__header">Lista wszystkich zgłoszeń</h4>
+
+  <table mat-table [dataSource]="dataSource" class="">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Imię</th>
+      <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+      <th mat-header-cell *matHeaderCellDef>Nazwisko</th>
+      <td mat-cell *matCellDef="let user">{{ user.surname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let user">
+        {{ user.email }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Rola</th>
+      <td mat-cell *matCellDef="let user">
+        {{ user.role}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 </div>
