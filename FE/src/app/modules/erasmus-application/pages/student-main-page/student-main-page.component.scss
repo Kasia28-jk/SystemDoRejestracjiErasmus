@@ -1,7 +1,15 @@
 .main-page {
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
   & h3 {
     font-size: 2.2rem;
+  }
+
+  & h4 {
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
   }
 }

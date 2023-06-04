@@ -15,7 +15,14 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BrowserModule} from "@angular/platform-browser";
 import {MatTableModule} from "@angular/material/table";
 import {RoleCheckerDirective} from "./directive/role-checker.directive";
-import { RegistrationForErasmusTripPageComponent } from './pages/registration-for-erasmus-trip-page/registration-for-erasmus-trip-page.component';
+import {
+  RegistrationForErasmusTripPageComponent
+} from './pages/registration-for-erasmus-trip-page/registration-for-erasmus-trip-page.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { YourApplicationStatusComponent } from './pages/student-main-page/components/your-application-status/your-application-status.component';
+import {MatIconModule} from "@angular/material/icon";
+import {RouterLink} from "@angular/router";
+import { ApplicationsListPageComponent } from './pages/applications-list-page/applications-list-page.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +31,9 @@ import { RegistrationForErasmusTripPageComponent } from './pages/registration-fo
     AddUniversityComponent,
     UniversitiesListComponent,
     RegistrationForErasmusTripPageComponent,
-    RoleCheckerDirective
+    RoleCheckerDirective,
+    YourApplicationStatusComponent,
+    ApplicationsListPageComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +46,13 @@ import { RegistrationForErasmusTripPageComponent } from './pages/registration-fo
     MatSelectModule,
     MatButtonModule,
     MatTableModule,
+    MatSnackBarModule,
+    MatIconModule,
+    RouterLink
   ],
+  exports: [
+    RoleCheckerDirective
+  ]
 })
 export class ErasmusApplicationModule {
 }

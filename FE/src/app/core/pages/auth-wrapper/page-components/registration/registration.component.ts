@@ -35,7 +35,7 @@ export class RegistrationComponent implements OnInit {
       first_name: new FormControl('', Validators.required),
       last_name: new FormControl('', Validators.required),
       roles: new FormControl([], Validators.required)
-    }, {updateOn: 'blur'});
+    });
   }
 
   onSubmit() {

@@ -14,6 +14,7 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {SignMeUpComponent} from './pages/dashboard/sign-me-up/sign-me-up.component';
 import {AboutMeComponent} from './pages/dashboard/about-me/about-me.component';
 import {MatIconModule} from "@angular/material/icon";
+import {ErasmusApplicationModule} from "../modules/erasmus-application/erasmus-application.module";
 
 
 @NgModule({
@@ -27,16 +28,17 @@ import {MatIconModule} from "@angular/material/icon";
     SignMeUpComponent,
     AboutMeComponent,
   ],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    RouterModule,
-    MatIconModule
-  ],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        RouterModule,
+        MatIconModule,
+        ErasmusApplicationModule
+    ],
   exports: [
     NavigationComponent,
   ]

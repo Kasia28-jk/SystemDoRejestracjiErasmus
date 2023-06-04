@@ -5,8 +5,9 @@
     <a
       [ngClass]="router.url == NAVIGATION[key].path ? 'active' : ''"
       [routerLink]="NAVIGATION[key].path"
+      *appRoleChecker="NAVIGATION[key].requiredRole"
       >{{ NAVIGATION[key].name }}</a
     >
   </div>
-  <a routerLink="#"> <span class="material-symbols-outlined"> logout </span></a>
+  <a> <span (click)="logout()" class="material-symbols-outlined"> logout </span></a>
 </div>
